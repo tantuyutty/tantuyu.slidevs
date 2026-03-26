@@ -19,6 +19,17 @@ jobs:
           cache: pnpm
 
       - run: pnpm install
+
+      - name: Cache Vite build
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules/.vite
+            node_modules/.cache
+          key: vite-${{ runner.os }}-${{ hashFiles('decks/*/slides.md', 'pnpm-lock.yaml') }}
+          restore-keys: |
+            vite-${{ runner.os }}-
+
       - run: pnpm build
         env:
           NODE_OPTIONS: --max-old-space-size=4096
