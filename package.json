@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build-all.mjs",
+    "build:landing": "node scripts/build-all.mjs --landing-only",
     "dev": "slidev --open",
     "export": "slidev export"
   },
