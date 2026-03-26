@@ -20,6 +20,8 @@ jobs:
 
       - run: pnpm install
       - run: pnpm build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
 
       - name: Deploy to VPS
         uses: easingthemes/ssh-deploy@v4
