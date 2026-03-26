@@ -1,0 +1,19 @@
+@import url("https://cdn.jsdelivr.net/npm/geist@1/dist/fonts/geist-sans/style.css");
+@import url("https://cdn.jsdelivr.net/npm/geist@1/dist/fonts/geist-mono/style.css");
+
+h1 {
+    font-weight: 800 !important;
+}
+
+* td {
+    padding: 4px 10px 4px 10px !important;
+}
+
+h3 {
+    margin-bottom: 1rem !important;
+    margin-top: 0.75rem !important;
+}
+
+blockquote {
+    margin: 1rem 0 !important;
+}
