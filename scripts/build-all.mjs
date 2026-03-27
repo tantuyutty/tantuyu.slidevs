@@ -107,7 +107,10 @@ function generateLandingPage(decks) {
     })
     .join("\n");
 
-  const html = template.replace("<!-- DECKS_PLACEHOLDER -->", cards);
+  const html = template.replace(
+    '<div id="decksGrid" class="grid gap-4 grid-cols-1 sm:grid-cols-2">\n        <!-- DECKS_PLACEHOLDER -->\n      </div>',
+    `<div id="decksGrid" class="grid gap-4 grid-cols-1 sm:grid-cols-2">\n        ${cards}\n      </div>`
+  );
 
   mkdirSync(distDir, { recursive: true });
   writeFileSync(join(distDir, "index.html"), html, "utf-8");

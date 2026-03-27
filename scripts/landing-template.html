@@ -9,7 +9,7 @@
       @theme {
         --color-accent: #4ec5d4;
         --color-accent-dark: #146b8c;
-        --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+        --font-sans: "Geist", system-ui, -apple-system, sans-serif;
       }
     </style>
   </head>
@@ -18,17 +18,47 @@
   >
     <div class="max-w-3xl mx-auto px-5 py-16">
       <header class="text-center mb-14">
-        <h1
-          class="text-5xl font-extrabold tracking-tight bg-gradient-to-br from-accent to-accent-dark bg-clip-text text-transparent mb-2"
-        >
+        <h1 class="text-5xl font-extrabold text-white mb-2">
           tantuyu's Slides
         </h1>
         <p class="text-neutral-500 text-lg">我可愛的簡報們</p>
       </header>
 
-      <div class="grid gap-4">
+      <div class="mb-6">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="搜尋簡報..."
+          class="w-full px-4 py-3 bg-neutral-900 border border-neutral-800 rounded-xl text-neutral-200 placeholder-neutral-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
+        />
+      </div>
+
+      <div id="noResults" class="hidden text-center py-12 text-neutral-500">
+        找不到符合的簡報
+      </div>
+
+      <div id="decksGrid" class="grid gap-4 grid-cols-1 sm:grid-cols-2">
         <!-- DECKS_PLACEHOLDER -->
       </div>
+
+      <script>
+        document
+          .getElementById("searchInput")
+          .addEventListener("input", function (e) {
+            const query = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll("#decksGrid > a");
+            let visibleCount = 0;
+            cards.forEach(function (card) {
+              const title = card.querySelector("h2").textContent.toLowerCase();
+              const match = title.includes(query);
+              card.style.display = match ? "" : "none";
+              if (match) visibleCount++;
+            });
+            document
+              .getElementById("noResults")
+              .classList.toggle("hidden", visibleCount > 0);
+          });
+      </script>
 
       <footer class="text-center mt-16 text-neutral-600 text-sm">
         Powered by
