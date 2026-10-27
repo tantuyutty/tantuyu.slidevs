@@ -1,5 +1,7 @@
 ---
 theme: default
+addons:
+  - "@/../_shared"
 author: tantuyu
 title: 入門網頁漏洞
 description: 從 OWASP Top 10 到 XSS、SQL Injection、CSRF 的攻防實戰

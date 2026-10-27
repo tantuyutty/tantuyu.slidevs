@@ -3,6 +3,54 @@
 Each presentation lives in `slides/<slug>/slides.md`. The build and local-development
 commands discover those entries automatically.
 
+## Slide source structure
+
+```text
+slides/
+├── _shared/
+│   ├── package.json      # Private local Slidev addon
+│   ├── components/       # Counter, Footer, Image, InputExample, LoginExample
+│   ├── layouts/          # Shared tty-* layouts
+│   └── snippets/         # Shared code snippets
+├── api-world/
+│   ├── slides.md
+│   ├── global-bottom.vue # Presentation-specific footer
+│   ├── styles/
+│   └── public/
+├── web-basic/
+│   ├── slides.md
+│   └── public/
+└── web-vuln/
+    ├── slides.md
+    └── public/
+```
+
+`web-basic` and `web-vuln` load the shared components and layouts through this
+headmatter configuration:
+
+```yaml
+---
+theme: default
+addons:
+  - "@/../_shared"
+---
+```
+
+Slidev's `@/` prefix resolves from the presentation's directory, so
+`@/../_shared` points to `slides/_shared/`. The addon's `package.json` is required
+by Slidev; it is private and does not need to be published or installed separately.
+
+Keep reusable components and layouts in `slides/_shared/`. Keep deck-specific
+components, layouts, styles, and assets inside the presentation's own directory;
+local components and layouts can override addon components and layouts.
+`api-world` does not load the addon because it currently uses its own footer and
+theme layouts.
+
+`_shared/` intentionally has no `slides.md`, so build, dev, and the landing page
+continue to discover only presentation directories.
+
+## Local development
+
 The `api-world` cover uses a solid background; no animated background asset is required.
 
 ```sh
