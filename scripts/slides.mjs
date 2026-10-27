@@ -14,7 +14,7 @@ function findProjectRoot(startDir) {
 
     const parentDir = dirname(currentDir);
     if (parentDir === currentDir) {
-      throw new Error("Could not locate the tty-slides project root.");
+      throw new Error("Could not locate the tantuyu.slidevs project root.");
     }
     currentDir = parentDir;
   }

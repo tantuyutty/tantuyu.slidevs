@@ -1,4 +1,4 @@
-# tty-slides
+# tantuyu.slidevs
 
 Each presentation lives in `slides/<slug>/slides.md`. The build and local-development
 commands discover those entries automatically.
@@ -66,8 +66,15 @@ silent port change. This server is for local preview, not production hosting.
 
 ## Manual Cloudflare deployment
 
-The site is hosted at <https://tty-slides.huangmayor0905.workers.dev>.
+The project and package are named `tantuyu.slidevs`. The configured Cloudflare
+Worker name is `tantuyu-slidevs`, because Worker names cannot contain periods.
 Astro and Slidev build locally; Cloudflare serves the generated `dist/` directory.
+
+The existing deployment remains at
+<https://tty-slides.huangmayor0905.workers.dev>. Deploying with the renamed
+configuration creates a separate Worker expected at
+<https://tantuyu-slidevs.huangmayor0905.workers.dev>; this does not rename or
+delete the existing deployment. The new Worker has not been published yet.
 
 Install dependencies and authenticate before the first deployment:
 
