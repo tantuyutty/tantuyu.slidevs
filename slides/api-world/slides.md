@@ -1,11 +1,11 @@
 ---
 theme: seriph
-background: /background.gif
+# background: "#1f2937"
 title: API 的世界
 description: 從後端基礎到 RESTful API、Cookie 與資訊安全
 author: tantuyu
 date: 2026-03-24
-class: text-center
+class: text-center text-white
 transition: slide-left
 fonts:
   provider: none
@@ -24,8 +24,8 @@ fonts:
 </div>
 
 ---
-transition: fade-out
----
+
+## transition: fade-out
 
 # 什麼是後端（Backend）？
 
@@ -36,12 +36,12 @@ transition: fade-out
 
 ### 餐廳比喻
 
-| 餐廳 | 網頁應用程式 |
-|---|---|
-| 顧客 | 使用者 / 瀏覽器 |
-| 服務生 | API |
-| 廚房 | 後端伺服器 |
-| 食譜 | 資料庫 |
+| 餐廳   | 網頁應用程式    |
+| ------ | --------------- |
+| 顧客   | 使用者 / 瀏覽器 |
+| 服務生 | API             |
+| 廚房   | 後端伺服器      |
+| 食譜   | 資料庫          |
 
 </div>
 <div>
@@ -102,13 +102,13 @@ sequenceDiagram
 
 <div class="mt-2 text-sm">
 
-| 方法 | 用途 | 範例 | 安全？ |
-|--------|---------|---------|-------|
-| `GET` | 讀取資料 | 取得使用者個人檔案 | 是 |
-| `POST` | 建立資料 | 註冊新使用者 | 否 |
-| `PUT` | 取代資料 | 更新整個個人檔案 | 否 |
-| `PATCH` | 部分更新 | 只修改電子郵件 | 否 |
-| `DELETE` | 刪除資料 | 刪除帳號 | 否 |
+| 方法     | 用途     | 範例               | 安全？ |
+| -------- | -------- | ------------------ | ------ |
+| `GET`    | 讀取資料 | 取得使用者個人檔案 | 是     |
+| `POST`   | 建立資料 | 註冊新使用者       | 否     |
+| `PUT`    | 取代資料 | 更新整個個人檔案   | 否     |
+| `PATCH`  | 部分更新 | 只修改電子郵件     | 否     |
+| `DELETE` | 刪除資料 | 刪除帳號           | 否     |
 
 </div>
 
@@ -136,17 +136,17 @@ Host: example.com
 <div class="grid grid-cols-2 gap-6 mt-2 text-sm">
 <div>
 
-| 狀態碼 | 意義 |
-|------|---------|
-| `200` | 成功 |
-| `201` | 已建立 |
-| `204` | 無內容 |
-| `301` | 永久轉址 |
-| `400` | 錯誤的請求 |
-| `401` | 未授權 |
-| `403` | 禁止存取 |
-| `404` | 找不到 |
-| `500` | 伺服器內部錯誤 |
+| 狀態碼 | 意義           |
+| ------ | -------------- |
+| `200`  | 成功           |
+| `201`  | 已建立         |
+| `204`  | 無內容         |
+| `301`  | 永久轉址       |
+| `400`  | 錯誤的請求     |
+| `401`  | 未授權         |
+| `403`  | 禁止存取       |
+| `404`  | 找不到         |
+| `500`  | 伺服器內部錯誤 |
 
 </div>
 <div v-click>
@@ -170,8 +170,10 @@ Host: example.com
 </div>
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # 第二部分：RESTful API
@@ -221,12 +223,15 @@ https://api.example.com/users/42/posts/7
 <v-clicks>
 
 ### 1. 客戶端-伺服器
+
 將使用者介面與資料儲存分離
 
 ### 2. 無狀態（Stateless）
+
 每個請求包含所有必要資訊，伺服器不儲存工作階段
 
 ### 3. 可快取（Cacheable）
+
 回應必須定義是否可以被快取
 
 </v-clicks>
@@ -237,12 +242,15 @@ https://api.example.com/users/42/posts/7
 <v-clicks>
 
 ### 4. 統一介面（Uniform Interface）
+
 一致的 URL、方法和回應格式
 
 ### 5. 分層系統（Layered System）
+
 客戶端無法分辨是直連伺服器還是代理
 
 ### 6. 按需程式碼（Code on Demand，選用）
+
 伺服器可傳送可執行的程式碼
 
 </v-clicks>
@@ -258,18 +266,18 @@ https://api.example.com/users/42/posts/7
 
 <div class="mt-2 text-sm">
 
-| 動作 | 方法 | 端點 | 主體 |
-|--------|--------|----------|------|
-| 列出所有文章 | `GET` | `/api/posts` | — |
-| 取得單篇文章 | `GET` | `/api/posts/:id` | — |
-| 建立文章 | `POST` | `/api/posts` | `{ title, content }` |
-| 更新文章 | `PUT` | `/api/posts/:id` | `{ title, content }` |
-| 刪除文章 | `DELETE` | `/api/posts/:id` | — |
-| 列出文章留言 | `GET` | `/api/posts/:id/comments` | — |
+| 動作         | 方法     | 端點                      | 主體                 |
+| ------------ | -------- | ------------------------- | -------------------- |
+| 列出所有文章 | `GET`    | `/api/posts`              | —                    |
+| 取得單篇文章 | `GET`    | `/api/posts/:id`          | —                    |
+| 建立文章     | `POST`   | `/api/posts`              | `{ title, content }` |
+| 更新文章     | `PUT`    | `/api/posts/:id`          | `{ title, content }` |
+| 刪除文章     | `DELETE` | `/api/posts/:id`          | —                    |
+| 列出文章留言 | `GET`    | `/api/posts/:id/comments` | —                    |
 
 </div>
 
-----
+---
 
 ### 好的 vs 不好的 URL 設計
 
@@ -304,7 +312,7 @@ def get_users():
     return jsonify(users)
 ```
 
-----
+---
 
 ```python{all|1-8|10-14|all}
 # POST — 建立使用者
@@ -373,8 +381,10 @@ JavaScript Object Notation（JavaScript 物件表示法）
 </v-click>
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # 第三部分：Cookie
@@ -428,14 +438,14 @@ Set-Cookie: theme=dark; Path=/; Max-Age=31536000
 
 <div class="mt-2 text-sm">
 
-| 屬性 | 用途 |
-|-----------|---------|
-| `Path` | Cookie 適用的 URL 範圍 |
-| `Domain` | 哪個網域可以讀取此 Cookie |
-| `Max-Age` / `Expires` | Cookie 何時過期 |
-| `HttpOnly` | JavaScript 無法存取 |
-| `Secure` | 只透過 HTTPS 傳送 |
-| `SameSite` | 控制跨站傳送行為 |
+| 屬性                  | 用途                      |
+| --------------------- | ------------------------- |
+| `Path`                | Cookie 適用的 URL 範圍    |
+| `Domain`              | 哪個網域可以讀取此 Cookie |
+| `Max-Age` / `Expires` | Cookie 何時過期           |
+| `HttpOnly`            | JavaScript 無法存取       |
+| `Secure`              | 只透過 HTTPS 傳送         |
+| `SameSite`            | 控制跨站傳送行為          |
 
 </div>
 
@@ -449,11 +459,13 @@ Set-Cookie: theme=dark; Path=/; Max-Age=31536000
 <div>
 
 ### 工作階段 Cookie（Session）
+
 - 沒有 `Expires` 或 `Max-Age`
 - 關閉瀏覽器時刪除
 - 用於登入工作階段
 
 ### 持久性 Cookie（Persistent）
+
 - 有過期日期，瀏覽器重啟後仍存在
 - 用於「記住我」功能
 
@@ -461,10 +473,12 @@ Set-Cookie: theme=dark; Path=/; Max-Age=31536000
 <div>
 
 ### 第一方 Cookie（First-Party）
+
 - 由你正在瀏覽的網站設定
 - 用於驗證、偏好設定，通常受信任
 
 ### 第三方 Cookie（Third-Party）
+
 - 由不同網域設定（廣告、追蹤器）
 - 用於跨站追蹤，正被各瀏覽器逐步淘汰
 
@@ -484,14 +498,14 @@ Set-Cookie: token=xyz; Max-Age=2592000            # Persistent Cookie
 
 <div class="mt-2 text-xs">
 
-| | Cookie 工作階段 | JWT Token | API Key |
-|---|---|---|---|
-| 儲存位置 | 瀏覽器 Cookie | LocalStorage / Cookie | 客戶端設定 |
-| 傳送方式 | `Cookie` 標頭（自動） | `Authorization` 標頭（手動） | 標頭或查詢參數 |
-| 有狀態？ | 是（伺服器儲存工作階段） | 否（自包含） | 否 |
-| 過期 | 伺服器控制 | Token 內建 | 手動輪換 |
-| CSRF 風險 | 有 | 無（若在標頭中） | 無 |
-| XSS 風險 | 無（若有 HttpOnly） | 有（若在 localStorage） | 有 |
+|           | Cookie 工作階段          | JWT Token                    | API Key        |
+| --------- | ------------------------ | ---------------------------- | -------------- |
+| 儲存位置  | 瀏覽器 Cookie            | LocalStorage / Cookie        | 客戶端設定     |
+| 傳送方式  | `Cookie` 標頭（自動）    | `Authorization` 標頭（手動） | 標頭或查詢參數 |
+| 有狀態？  | 是（伺服器儲存工作階段） | 否（自包含）                 | 否             |
+| 過期      | 伺服器控制               | Token 內建                   | 手動輪換       |
+| CSRF 風險 | 有                       | 無（若在標頭中）             | 無             |
+| XSS 風險  | 無（若有 HttpOnly）      | 有（若在 localStorage）      | 有             |
 
 </div>
 
@@ -502,8 +516,10 @@ Set-Cookie: token=xyz; Max-Age=2592000            # Persistent Cookie
 </v-click>
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # 第四部分：資訊安全
@@ -540,7 +556,7 @@ class: text-center
 
 ```js
 // 1. 跳脫輸出
-const safe = escapeHtml(userInput)
+const safe = escapeHtml(userInput);
 
 // 2. 內容安全政策（CSP）
 // Content-Security-Policy: script-src 'self'
@@ -581,6 +597,7 @@ sequenceDiagram
 <div class="text-sm">
 
 ### 防禦方式
+
 - **SameSite Cookie** — `SameSite=Strict` 或 `SameSite=Lax`
 - **CSRF Token** — 每個表單一個獨特的 Token，由伺服器端驗證
 - **檢查 `Origin` / `Referer` 標頭** — 拒絕跨來源請求
@@ -608,6 +625,7 @@ Set-Cookie: session=abc123;
 <div v-click>
 
 ### 應該做的
+
 - 對工作階段 Cookie 使用 `HttpOnly`
 - 在正式環境使用 `Secure`
 - 設定 `SameSite` 為 `Lax` 或 `Strict`
@@ -618,6 +636,7 @@ Set-Cookie: session=abc123;
 <div v-click>
 
 ### 不應該做的
+
 - 在 Cookie 值中儲存敏感資料
 - 在 HTTP 上不設 `Secure`
 - 無正當理由設定 `SameSite=None`
@@ -637,12 +656,14 @@ Set-Cookie: session=abc123;
 <div>
 
 ### 身份驗證與授權
+
 - 全面使用 HTTPS
 - 實作速率限制
 - 正確驗證 JWT
 - 每次請求都檢查權限
 
 ### 輸入驗證
+
 - 在伺服器端驗證所有輸入
 - 使用參數化查詢（防 SQL 注入）
 - 限制請求大小、過濾檔案上傳
@@ -651,12 +672,14 @@ Set-Cookie: session=abc123;
 <div>
 
 ### 標頭與傳輸
+
 - 設定 `Content-Type: application/json`
 - 正確使用 CORS（不要用 `*`）
 - 加入安全標頭（CSP、HSTS）
 - 停用不需要的 HTTP 方法
 
 ### 監控
+
 - 記錄所有身份驗證事件
 - 監控異常模式
 - 設定登入失敗警報
@@ -666,8 +689,10 @@ Set-Cookie: session=abc123;
 </div>
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # 重點整理
@@ -676,6 +701,7 @@ class: text-center
 <div>
 
 ### API
+
 - 使用 RESTful 設計
 - 正確的 HTTP 方法與狀態碼
 - 伺服器端驗證一切
@@ -684,6 +710,7 @@ class: text-center
 <div>
 
 ### Cookie
+
 - HttpOnly + Secure + SameSite
 - 使用工作階段 Cookie 做身份驗證
 - 設定較短的過期時間
@@ -692,6 +719,7 @@ class: text-center
 <div>
 
 ### 安全性
+
 - 縱深防禦
 - 永遠不要信任客戶端
 - 了解常見攻擊手法
@@ -700,8 +728,10 @@ class: text-center
 </div>
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # CTF Time
@@ -713,8 +743,10 @@ class: text-center
 </div>
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 [CTF Try Out](https://ctf.hackthebox.com/event/details/ctf-try-out-1434)
@@ -722,8 +754,10 @@ class: text-center
 `Web` `Very Eazy`
 
 ---
+
 layout: center
 class: text-center
+
 ---
 
 # 謝謝
