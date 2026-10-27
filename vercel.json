@@ -2,6 +2,6 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/:deck/(.*)", "destination": "/:deck/index.html" }
+    { "source": "/:slide/(.*)", "destination": "/:slide/index.html" }
   ]
 }

@@ -1,0 +1,115 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  description?: string;
+  date?: string;
+}
+
+const { slug, title, description = "", date = "" } = Astro.props;
+const href = `/${encodeURIComponent(slug)}/`;
+---
+
+<a class="slide-card" href={href} data-slide-card data-search-title={title.toLocaleLowerCase("zh-Hant")}>
+  <div class="slide-card__heading">
+    <h2>{title}</h2>
+    {date && <time datetime={date}>{date}</time>}
+  </div>
+  {description && <p>{description}</p>}
+  <span class="slide-card__action" aria-hidden="true">開啟簡報</span>
+</a>
+
+<style>
+  .slide-card {
+    position: relative;
+    display: grid;
+    min-height: 10.5rem;
+    padding: 1.25rem;
+    overflow: hidden;
+    text-decoration: none;
+    background: color-mix(in srgb, var(--surface) 94%, transparent);
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    transition:
+      border-color 140ms ease,
+      background-color 140ms ease;
+  }
+
+  .slide-card[hidden] {
+    display: none;
+  }
+
+  .slide-card::after {
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 1.5rem;
+    height: 1.5rem;
+    content: "";
+    border-right: 1px solid var(--accent);
+    border-bottom: 1px solid var(--accent);
+    opacity: 0;
+    transition: opacity 140ms ease;
+  }
+
+  .slide-card:hover,
+  .slide-card:focus-visible {
+    background: var(--surface-active);
+    border-color: var(--border-strong);
+  }
+
+  .slide-card:hover::after,
+  .slide-card:focus-visible::after {
+    opacity: 1;
+  }
+
+  .slide-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .slide-card__heading {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 650;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+
+  time {
+    flex: 0 0 auto;
+    color: var(--faint);
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-size: 0.75rem;
+  }
+
+  p {
+    max-width: 52ch;
+    margin: 0.75rem 0 1.25rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.65;
+  }
+
+  .slide-card__action {
+    align-self: end;
+    color: var(--accent);
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-size: 0.75rem;
+    opacity: 0.72;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide-card,
+    .slide-card::after {
+      transition: none;
+    }
+  }
+</style>

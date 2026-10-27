@@ -1,0 +1,143 @@
+---
+import SlideCard from "../components/SlideCard.astro";
+import SlideSearch from "../components/SlideSearch.astro";
+import Layout from "../layouts/Layout.astro";
+import { discoverSlidesWithMetadata } from "../../../scripts/slides.mjs";
+
+const slides = discoverSlidesWithMetadata()
+  .map(({ slug, meta }) => {
+    const title = typeof meta.title === "string" ? meta.title : slug;
+    const rawDescription = meta.description ?? meta.info ?? "";
+    const description =
+      typeof rawDescription === "string"
+        ? rawDescription.replace(/[#*_`\[\]()]/g, "").trim()
+        : "";
+    const date = typeof meta.date === "string" ? meta.date : "";
+
+    return { slug, title, description, date };
+  })
+  .sort((a, b) => {
+    if (a.date && b.date) return b.date.localeCompare(a.date);
+    if (a.date) return -1;
+    if (b.date) return 1;
+    return a.title.localeCompare(b.title, "zh-Hant");
+  });
+---
+
+<Layout title="tantuyu's Slides" description="tantuyu 的簡報收藏">
+  <main class="shell">
+    <header>
+      <p class="path" aria-label="tty slides">~/tantuyu-slides</p>
+      <h1>tantuyu's Slides</h1>
+      <p class="intro">放養可愛的簡報們</p>
+    </header>
+
+    <section aria-labelledby="slide-list-title">
+      <div class="section-heading">
+        <h2 id="slide-list-title">簡報列表</h2>
+        <span>{slides.length} slides</span>
+      </div>
+
+      <SlideSearch />
+
+      <div class="slide-grid" data-slide-grid>
+        {slides.map((slide) => <SlideCard {...slide} />)}
+      </div>
+    </section>
+
+    <footer>
+      Built with <a href="https://astro.build" target="_blank" rel="noreferrer"
+        >Astro</a
+      >{" "}
+      and <a href="https://sli.dev" target="_blank" rel="noreferrer">Slidev</a>.
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Serif+TC:wght@200..900&display=swap");
+
+  .shell {
+    width: min(100% - 2.5rem, 52rem);
+    margin-inline: auto;
+    padding-block: clamp(3.5rem, 9vw, 7rem) 2.5rem;
+  }
+
+  header {
+    margin-bottom: clamp(3.5rem, 8vw, 6rem);
+  }
+
+  .path {
+    margin: 0 0 1rem;
+    color: var(--accent);
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-size: 0.8125rem;
+  }
+
+  h1 {
+    font-family: "Lora", "Noto Serif TC", serif;
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(2.75rem, 9vw, 5.5rem);
+    font-weight: 700;
+    font-optical-sizing: auto;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  .intro {
+    font-family: "Lora", "Noto Serif TC", serif;
+    margin: 1.5rem 0 0;
+    color: var(--muted);
+    font-size: 1.0625rem;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-heading h2 {
+    font-family: "Lora", "Noto Serif TC", serif;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .section-heading span {
+    color: var(--faint);
+    font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    font-size: 0.75rem;
+  }
+
+  .slide-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  footer {
+    padding-top: 4rem;
+    color: var(--faint);
+    font-size: 0.75rem;
+    text-align: center;
+  }
+
+  footer a {
+    color: var(--muted);
+    text-underline-offset: 0.2em;
+  }
+
+  footer a:hover,
+  footer a:focus-visible {
+    color: var(--accent);
+  }
+
+  @media (max-width: 40rem) {
+    .slide-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

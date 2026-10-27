@@ -1,0 +1,94 @@
+---
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#090b0d" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    color-scheme: dark;
+    --background: #141414;
+    --surface: #191919;
+    --surface-active: #212121;
+    --border: #292929;
+    --border-strong: #333333;
+    --text: #edf2f4;
+    --muted: #8b8b8b;
+    --faint: #5e5e5e;
+    --accent: #d0ae7d;
+    --accent-soft: #16383e;
+    font-family:
+      Geist,
+      Inter,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+    font-synthesis: none;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    min-width: 20rem;
+    background: var(--background);
+  }
+
+  body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--text);
+    background: var(--background);
+    background-size: 3rem 3rem;
+    background-position: -1px -1px;
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    background: radial-gradient(
+      circle at 50% 0%,
+      rgb(9 11 13 / 0%) 0%,
+      var(--background) 42rem
+    );
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button,
+  input {
+    font: inherit;
+  }
+
+  ::selection {
+    color: var(--background);
+    background: var(--accent);
+  }
+</style>
