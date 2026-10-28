@@ -3,9 +3,20 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
 
+/**
+ * @typedef {object} SlideSource
+ * @property {string} slug
+ * @property {string} slidesPath
+ */
+
+/** @typedef {Record<string, unknown>} SlideMetadata */
+
+/** @typedef {SlideSource & { meta: SlideMetadata }} SlideWithMetadata */
+
 const scriptsDir = dirname(fileURLToPath(import.meta.url));
 const sourceRoot = resolve(scriptsDir, "..");
 
+/** @param {string} startDir */
 function findProjectRoot(startDir) {
   let currentDir = resolve(startDir);
 
@@ -25,6 +36,10 @@ export const root = existsSync(join(sourceRoot, "slides"))
   : findProjectRoot(process.cwd());
 export const slidesDir = join(root, "slides");
 
+/**
+ * @param {string | null} [slug]
+ * @returns {SlideSource[]}
+ */
 export function discoverSlides(slug = null) {
   return readdirSync(slidesDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -37,6 +52,10 @@ export function discoverSlides(slug = null) {
     .sort((a, b) => a.slug.localeCompare(b.slug));
 }
 
+/**
+ * @param {string} slidesPath
+ * @returns {SlideMetadata}
+ */
 export function readSlideMetadata(slidesPath) {
   const content = readFileSync(slidesPath, "utf-8");
   const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
@@ -51,6 +70,10 @@ export function readSlideMetadata(slidesPath) {
   }
 }
 
+/**
+ * @param {string | null} [slug]
+ * @returns {SlideWithMetadata[]}
+ */
 export function discoverSlidesWithMetadata(slug = null) {
   return discoverSlides(slug).map((slide) => ({
     ...slide,

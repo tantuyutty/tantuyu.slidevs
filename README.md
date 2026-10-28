@@ -49,6 +49,11 @@ theme layouts.
 `_shared/` intentionally has no `slides.md`, so build, dev, and the landing page
 continue to discover only presentation directories.
 
+`scripts/slides.mjs` defines the discovery API's `SlideSource`, `SlideMetadata`,
+and `SlideWithMetadata` types with JSDoc. The landing page inherits Astro's strict
+TypeScript configuration (including `allowJs`) so imports infer those types
+directly; frontmatter values remain `unknown` until narrowed.
+
 ## Local development
 
 The `api-world` cover uses a solid background; no animated background asset is required.

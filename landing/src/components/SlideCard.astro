@@ -10,7 +10,12 @@ const { slug, title, description = "", date = "" } = Astro.props;
 const href = `/${encodeURIComponent(slug)}/`;
 ---
 
-<a class="slide-card" href={href} data-slide-card data-search-title={title.toLocaleLowerCase("zh-Hant")}>
+<a
+  class="slide-card"
+  href={href}
+  data-slide-card
+  data-search-title={title.toLocaleLowerCase("zh-Hant")}
+>
   <div class="slide-card__heading">
     <h2>{title}</h2>
     {date && <time datetime={date}>{date}</time>}
@@ -76,6 +81,7 @@ const href = `/${encodeURIComponent(slug)}/`;
   }
 
   h2 {
+    font-family: "Lora", "Noto Serif TC", serif;
     margin: 0;
     font-size: 1.125rem;
     font-weight: 650;

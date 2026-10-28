@@ -1,11 +1,14 @@
 ---
+import type { ComponentProps } from "astro/types";
 import SlideCard from "../components/SlideCard.astro";
 import SlideSearch from "../components/SlideSearch.astro";
 import Layout from "../layouts/Layout.astro";
 import { discoverSlidesWithMetadata } from "../../../scripts/slides.mjs";
 
-const slides = discoverSlidesWithMetadata()
-  .map(({ slug, meta }) => {
+type Slide = Required<ComponentProps<typeof SlideCard>>;
+
+const slides: Slide[] = discoverSlidesWithMetadata()
+  .map(({ slug, meta }): Slide => {
     const title = typeof meta.title === "string" ? meta.title : slug;
     const rawDescription = meta.description ?? meta.info ?? "";
     const description =
@@ -55,8 +58,6 @@ const slides = discoverSlidesWithMetadata()
 </Layout>
 
 <style>
-  @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Serif+TC:wght@200..900&display=swap");
-
   .shell {
     width: min(100% - 2.5rem, 52rem);
     margin-inline: auto;
