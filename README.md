@@ -80,6 +80,14 @@ The landing-page search filters presentation titles, ignoring case and surroundi
 whitespace. Nonmatching cards are hidden; if nothing matches, only the no-results
 message is shown in the list. Clearing the search restores all presentations.
 
+The landing-page theme initially follows the system color scheme, including live
+changes. The top-right button switches between light and dark and remembers the
+choice in `localStorage` under `theme`. If storage is unavailable, switching still
+works for the current page. Without JavaScript, the system theme applies and the
+toggle stays hidden. This setting does not change individual Slidev presentations.
+
+The landing-page footer links to the author's GitHub profile and this repository.
+
 Build every discovered slide presentation and regenerate the Astro landing page:
 
 ```sh

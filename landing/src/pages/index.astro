@@ -1,7 +1,9 @@
 ---
 import type { ComponentProps } from "astro/types";
+import Footer from "../components/Footer.astro";
 import SlideCard from "../components/SlideCard.astro";
 import SlideSearch from "../components/SlideSearch.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
 import Layout from "../layouts/Layout.astro";
 import { discoverSlidesWithMetadata } from "../../../scripts/slides.mjs";
 
@@ -30,7 +32,10 @@ const slides: Slide[] = discoverSlidesWithMetadata()
 <Layout title="tantuyu.slidevs" description="tantuyu 的簡報">
   <main class="shell">
     <header>
-      <p class="path" aria-label="tantuyu.slidevs">~/tantuyu.slidevs</p>
+      <div class="header-top">
+        <p class="path" aria-label="tantuyu.slidevs">~/tantuyu.slidevs</p>
+        <ThemeToggle />
+      </div>
       <h1>tantuyu.<wbr />slidevs</h1>
       <p class="intro">放養可愛的簡報們</p>
     </header>
@@ -48,12 +53,7 @@ const slides: Slide[] = discoverSlidesWithMetadata()
       </div>
     </section>
 
-    <footer>
-      Built with <a href="https://astro.build" target="_blank" rel="noreferrer"
-        >Astro</a
-      >{" "}
-      and <a href="https://sli.dev" target="_blank" rel="noreferrer">Slidev</a>.
-    </footer>
+    <Footer />
   </main>
 </Layout>
 
@@ -68,8 +68,18 @@ const slides: Slide[] = discoverSlidesWithMetadata()
     margin-bottom: clamp(3.5rem, 8vw, 6rem);
   }
 
+  .header-top {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
   .path {
-    margin: 0 0 1rem;
+    min-width: 0;
+    margin: 0;
+    overflow-wrap: anywhere;
     color: var(--accent);
     font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
     font-size: 0.8125rem;
@@ -120,22 +130,6 @@ const slides: Slide[] = discoverSlidesWithMetadata()
     gap: 0.75rem;
   }
 
-  footer {
-    padding-top: 4rem;
-    color: var(--faint);
-    font-size: 0.75rem;
-    text-align: center;
-  }
-
-  footer a {
-    color: var(--muted);
-    text-underline-offset: 0.2em;
-  }
-
-  footer a:hover,
-  footer a:focus-visible {
-    color: var(--accent);
-  }
 
   @media (max-width: 40rem) {
     .slide-grid {

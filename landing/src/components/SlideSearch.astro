@@ -81,8 +81,13 @@
   }
 
   input::-webkit-search-cancel-button {
+    /* Keep the native glyph light-scheme before the explicit dark inversion. */
+    color-scheme: light;
+    opacity: 1;
+  }
+
+  :global([data-theme="dark"]) input::-webkit-search-cancel-button {
     filter: invert(1);
-    opacity: 0.5;
   }
 
   .no-results {

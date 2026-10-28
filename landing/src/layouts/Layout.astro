@@ -15,7 +15,25 @@ const { title, description } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#090b0d" />
+    <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      const root = document.documentElement;
+      root.classList.add("js");
+      let preference = null;
+      try {
+        const stored = localStorage.getItem("theme");
+        if (stored === "light" || stored === "dark") preference = stored;
+      } catch {}
+      const systemDark =
+        typeof matchMedia === "function" &&
+        matchMedia("(prefers-color-scheme: dark)").matches;
+      const theme = preference ?? (systemDark ? "dark" : "light");
+      root.dataset.theme = theme;
+      for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+        meta.setAttribute("content", theme === "dark" ? "#141414" : "#f7f7f7");
+      }
+    </script>
     <title>{title}</title>
 
     <meta property="og:title" content={title} />
@@ -33,17 +51,17 @@ const { title, description } = Astro.props;
 
 <style is:global>
   :root {
-    color-scheme: dark;
-    --background: #141414;
-    --surface: #191919;
-    --surface-active: #212121;
-    --border: #292929;
-    --border-strong: #333333;
-    --text: #edf2f4;
-    --muted: #8b8b8b;
-    --faint: #5e5e5e;
-    --accent: #d0ae7d;
-    --accent-soft: #16383e;
+    color-scheme: light;
+    --background: #f7f7f7;
+    --surface: #ffffff;
+    --surface-active: #ededed;
+    --border: #d6d6d6;
+    --border-strong: #b5b5b5;
+    --text: #202020;
+    --muted: #606060;
+    --faint: #696969;
+    --accent: #79501e;
+    --accent-soft: #e9dfd1;
     font-family:
       Geist,
       Inter,
@@ -54,6 +72,36 @@ const { title, description } = Astro.props;
       "Segoe UI",
       sans-serif;
     font-synthesis: none;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --background: #141414;
+    --surface: #191919;
+    --surface-active: #212121;
+    --border: #292929;
+    --border-strong: #333333;
+    --text: #edf2f4;
+    --muted: #8b8b8b;
+    --faint: #8b8b8b;
+    --accent: #d0ae7d;
+    --accent-soft: #16383e;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      color-scheme: dark;
+      --background: #141414;
+      --surface: #191919;
+      --surface-active: #212121;
+      --border: #292929;
+      --border-strong: #333333;
+      --text: #edf2f4;
+      --muted: #8b8b8b;
+      --faint: #8b8b8b;
+      --accent: #d0ae7d;
+      --accent-soft: #16383e;
+    }
   }
 
   * {
