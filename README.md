@@ -78,7 +78,9 @@ pnpm dev:landing
 
 The landing-page search filters presentation titles, ignoring case and surrounding
 whitespace. Nonmatching cards are hidden; if nothing matches, only the no-results
-message is shown in the list. Clearing the search restores all presentations.
+message is shown in the list. The heading count updates to the number of matching
+presentations, including zero. Clearing the search restores all presentations and
+the total count.
 
 The landing-page theme initially follows the system color scheme, including live
 changes. The top-right button switches between light and dark and remembers the

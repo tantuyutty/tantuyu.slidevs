@@ -18,6 +18,7 @@
   const input = document.querySelector<HTMLInputElement>("[data-slide-search]");
   const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-slide-card]"));
   const noResults = document.querySelector<HTMLElement>("[data-no-results]");
+  const count = document.querySelector<HTMLElement>("[data-slide-count]");
 
   function filterSlides(query: string) {
     const normalizedQuery = query.trim().toLocaleLowerCase("zh-Hant");
@@ -30,6 +31,7 @@
     }
 
     if (noResults) noResults.hidden = visibleCount > 0;
+    if (count) count.textContent = `${visibleCount} slides`;
   }
 
   input?.addEventListener("input", () => filterSlides(input.value));

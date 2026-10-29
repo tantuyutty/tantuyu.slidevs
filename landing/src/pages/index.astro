@@ -43,7 +43,7 @@ const slides: Slide[] = discoverSlidesWithMetadata()
     <section aria-labelledby="slide-list-title">
       <div class="section-heading">
         <h2 id="slide-list-title">簡報列表</h2>
-        <span>{slides.length} slides</span>
+        <span data-slide-count aria-live="polite">{slides.length} slides</span>
       </div>
 
       <SlideSearch />
@@ -57,8 +57,68 @@ const slides: Slide[] = discoverSlidesWithMetadata()
   </main>
 </Layout>
 
+<script>
+  const shell = document.querySelector<HTMLElement>(".shell");
+
+  if (shell) {
+    const targets = Array.from(
+      shell.querySelectorAll<HTMLElement>(
+        ".header-top, header > h1, .intro, .section-heading, .search, [data-slide-card], footer",
+      ),
+    );
+
+    function finishEntrance(element: HTMLElement): void {
+      element.style.animation = "none";
+    }
+
+    shell.addEventListener("animationend", (event) => {
+      if (
+        event.target instanceof HTMLElement &&
+        targets.includes(event.target) &&
+        event.pseudoElement === ""
+      ) {
+        finishEntrance(event.target);
+      }
+    });
+
+    for (const element of targets) {
+      const isAnimating = element
+        .getAnimations()
+        .some(
+          (animation) => animation.playState === "running" || animation.pending,
+        );
+      if (!isAnimating) finishEntrance(element);
+    }
+
+    // Finish before the search listener toggles display and can restart animations.
+    shell.addEventListener(
+      "input",
+      (event) => {
+        if (
+          event.target instanceof HTMLElement &&
+          event.target.matches("[data-slide-search]")
+        ) {
+          for (const element of targets) {
+            if (element.matches("[data-slide-card]")) finishEntrance(element);
+          }
+        }
+      },
+      { capture: true },
+    );
+
+    shell.addEventListener("focusin", (event) => {
+      if (event.target instanceof Node) {
+        for (const element of targets) {
+          if (element.contains(event.target)) finishEntrance(element);
+        }
+      }
+    });
+  }
+</script>
+
 <style>
   .shell {
+    --entrance-step: 40ms;
     width: min(100% - 2.5rem, 52rem);
     margin-inline: auto;
     padding-block: clamp(3.5rem, 9vw, 7rem) 2.5rem;
@@ -107,7 +167,7 @@ const slides: Slide[] = discoverSlidesWithMetadata()
   .section-heading {
     display: flex;
     align-items: baseline;
-    justify-content: space-between;
+    gap: 0.75rem;
     margin-bottom: 1.5rem;
   }
 
@@ -130,6 +190,95 @@ const slides: Slide[] = discoverSlidesWithMetadata()
     gap: 0.75rem;
   }
 
+  @keyframes landing-enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  .shell
+    :global(
+      :where(
+        .header-top,
+        header > h1,
+        .intro,
+        .section-heading,
+        .search,
+        [data-slide-card],
+        footer
+      )
+    ) {
+    animation: landing-enter 200ms ease-out
+      calc(var(--entrance-step) * var(--entrance-stage, 0)) 1 backwards;
+  }
+
+  .shell :global(header > h1) {
+    --entrance-stage: 1;
+  }
+
+  .shell :global(.intro) {
+    --entrance-stage: 2;
+  }
+
+  .shell :global(.section-heading) {
+    --entrance-stage: 3;
+  }
+
+  .shell :global(.search) {
+    --entrance-stage: 4;
+  }
+
+  .shell :global([data-slide-card]) {
+    --entrance-stage: 10;
+  }
+
+  .shell :global(.slide-grid > [data-slide-card]:nth-child(1)) {
+    --entrance-stage: 5;
+  }
+
+  .shell :global(.slide-grid > [data-slide-card]:nth-child(2)) {
+    --entrance-stage: 6;
+  }
+
+  .shell :global(.slide-grid > [data-slide-card]:nth-child(3)) {
+    --entrance-stage: 7;
+  }
+
+  .shell :global(.slide-grid > [data-slide-card]:nth-child(4)) {
+    --entrance-stage: 8;
+  }
+
+  .shell :global(.slide-grid > [data-slide-card]:nth-child(5)) {
+    --entrance-stage: 9;
+  }
+
+  .shell :global(footer) {
+    --entrance-stage: 11;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shell
+      :global(
+        :where(
+          .header-top,
+          header > h1,
+          .intro,
+          .section-heading,
+          .search,
+          [data-slide-card],
+          footer
+        )
+      ) {
+      animation: none;
+    }
+  }
 
   @media (max-width: 40rem) {
     .slide-grid {
