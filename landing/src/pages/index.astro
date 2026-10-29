@@ -3,6 +3,7 @@ import type { ComponentProps } from "astro/types";
 import Footer from "../components/Footer.astro";
 import SlideCard from "../components/SlideCard.astro";
 import SlideSearch from "../components/SlideSearch.astro";
+import SlideViewToggle from "../components/SlideViewToggle.astro";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import Layout from "../layouts/Layout.astro";
 import { discoverSlidesWithMetadata } from "../../../scripts/slides.mjs";
@@ -44,11 +45,12 @@ const slides: Slide[] = discoverSlidesWithMetadata()
       <div class="section-heading">
         <h2 id="slide-list-title">簡報列表</h2>
         <span data-slide-count aria-live="polite">{slides.length} slides</span>
+        <SlideViewToggle />
       </div>
 
       <SlideSearch />
 
-      <div class="slide-grid" data-slide-grid>
+      <div class="slide-grid" id="slide-grid" data-slide-grid data-view="card">
         {slides.map((slide) => <SlideCard {...slide} />)}
       </div>
     </section>
@@ -166,7 +168,8 @@ const slides: Slide[] = discoverSlidesWithMetadata()
 
   .section-heading {
     display: flex;
-    align-items: baseline;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 0.75rem;
     margin-bottom: 1.5rem;
   }
@@ -188,6 +191,12 @@ const slides: Slide[] = discoverSlidesWithMetadata()
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.75rem;
+  }
+
+  .slide-grid[data-view="list"] {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--border);
   }
 
   @keyframes landing-enter {

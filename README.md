@@ -76,8 +76,16 @@ The landing page is an Astro static site. Run it locally with:
 pnpm dev:landing
 ```
 
+The landing page defaults to card view. Use the “卡片” / “列表” buttons beside
+the presentation heading to switch between the card grid and compact single-column
+rows. Both views place the date below the title, show the same presentation details
+and links, and share the search filter. The selection lasts for the current page;
+reloading returns to card view. Switching views preserves border colors so card
+borders do not flash during the change; hover feedback remains enabled.
+Without JavaScript, the card view remains available and the view buttons stay hidden.
+
 The landing-page search filters presentation titles, ignoring case and surrounding
-whitespace. Nonmatching cards are hidden; if nothing matches, only the no-results
+whitespace. Nonmatching presentations are hidden; if nothing matches, only the no-results
 message is shown in the list. The heading count updates to the number of matching
 presentations, including zero. Clearing the search restores all presentations and
 the total count.
