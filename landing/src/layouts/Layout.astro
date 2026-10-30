@@ -15,8 +15,17 @@ const { title, description } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="theme-color"
+      content="#f7f7f7"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#141414"
+      media="(prefers-color-scheme: dark)"
+    />
+
     <script is:inline>
       const root = document.documentElement;
       root.classList.add("js");
@@ -30,7 +39,9 @@ const { title, description } = Astro.props;
         matchMedia("(prefers-color-scheme: dark)").matches;
       const theme = preference ?? (systemDark ? "dark" : "light");
       root.dataset.theme = theme;
-      for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+      for (const meta of document.querySelectorAll(
+        'meta[name="theme-color"]',
+      )) {
         meta.setAttribute("content", theme === "dark" ? "#141414" : "#f7f7f7");
       }
     </script>
@@ -43,6 +54,8 @@ const { title, description } = Astro.props;
 
     <meta property="og:locale" content="zh_TW" />
     <meta property="og:site_name" content="tantuyu.slidevs" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
     <slot />
