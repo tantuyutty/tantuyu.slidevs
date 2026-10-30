@@ -29,6 +29,10 @@ pnpm build
 pnpm preview
 ```
 
+部署目錄為根目錄的 `dist/`。Astro 的完整建置輸出會合併至此，包含 `landing/public/` 的 favicon 等靜態檔案。
+
+只重建首頁可執行 `pnpm build:landing`，既有的 Slidev 簡報輸出會保留。
+
 使用 wrangler 登入後部署到 Cloudflare Worker & Page
 
 ```

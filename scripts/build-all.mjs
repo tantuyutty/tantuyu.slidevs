@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
+import { cpSync, mkdirSync, rmSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 import { discoverSlides, root } from "./slides.mjs";
@@ -41,16 +41,11 @@ function buildLandingPage() {
   );
 
   const landingOutputDir = join(landingDir, "dist");
-  const generatedAssetsDir = join(landingOutputDir, "_landing");
   const outputAssetsDir = join(distDir, "_landing");
 
   mkdirSync(distDir, { recursive: true });
   rmSync(outputAssetsDir, { recursive: true, force: true });
-  cpSync(join(landingOutputDir, "index.html"), join(distDir, "index.html"));
-
-  if (existsSync(generatedAssetsDir)) {
-    cpSync(generatedAssetsDir, outputAssetsDir, { recursive: true });
-  }
+  cpSync(landingOutputDir, distDir, { recursive: true });
 
   console.log(`\n🏠 Astro landing page generated: dist/index.html`);
 }
